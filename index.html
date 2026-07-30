@@ -106,6 +106,29 @@
   .edge-dash{stroke-dasharray:6 4}
   .legend{font-size:11.5px;fill:var(--muted)}
 
+  .sidenav{display:none;position:fixed;top:110px;bottom:40px;overflow-y:auto;width:212px;
+    left:max(20px,calc(50vw - 700px))}
+  .sn-label{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--faint);margin:0 0 6px;padding-left:10px}
+  .sidenav a{display:block;font-size:13px;color:var(--muted);padding:5px 10px;
+    border-radius:8px;line-height:1.45;letter-spacing:-0.01em}
+  .sidenav a:hover{color:var(--ink);background:#eef0f4;text-decoration:none}
+  .sidenav a.sn-p{font-weight:700;color:var(--ink);margin-top:14px}
+  .sidenav a.sn-p .n{color:var(--accent);font-weight:800;font-size:11px;margin-right:7px}
+  .sidenav a.sn-s{margin-left:14px;border-left:2px solid var(--line);
+    border-radius:0 8px 8px 0;padding-left:13px}
+  .sidenav a.sn-p.active{color:var(--accent)}
+  .sidenav a.sn-s.active{color:var(--accent);font-weight:600;
+    border-left-color:var(--accent);background:var(--accent-soft)}
+  html{scroll-behavior:smooth}
+  h3{scroll-margin-top:20px}
+  @media (min-width:1200px){
+    .sidenav{display:block}
+    .wrap{margin-left:max(250px,calc(50vw - 470px));margin-right:auto}
+    .top-inner{margin-left:max(250px,calc(50vw - 470px));margin-right:auto}
+  }
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
+
   @media (max-width:620px){ .proj-head,.subcard{padding:26px 20px} .top h1{font-size:24px} .project{margin:56px 0} }
   @media print{
     body{background:#fff;font-size:12px}
@@ -120,6 +143,8 @@
     figure.dgm,.note,.proj-head,.blk{page-break-inside:avoid}
     h3,h4{page-break-after:avoid}
     a{color:var(--ink)} .back{display:none}
+    .sidenav{display:none!important}
+    .wrap,.top-inner{margin-left:auto;margin-right:auto}
   }
   @page{margin:14mm}
 </style>
@@ -144,6 +169,22 @@
     
   </div>
 </header>
+
+<nav class="sidenav" aria-label="빠른 이동">
+  <div class="sn-label">Contents</div>
+  <a class="sn-p" href="#automation"><span class="n">01</span>자동화 플랫폼 고도화</a>
+  <a class="sn-s" href="#auto-core">Core 고도화</a>
+  <a class="sn-s" href="#auto-node">NodeServer 구축</a>
+  <a class="sn-s" href="#auto-cli">CLI Commander API</a>
+  <a class="sn-s" href="#auto-line">기간망 선번장 관리</a>
+  <a class="sn-p" href="#international"><span class="n">02</span>국제망 관리 시스템</a>
+  <a class="sn-s" href="#intl-domain">6가지 경로 통합 모델링</a>
+  <a class="sn-s" href="#intl-failure">장애 유형 통합·추적</a>
+  <a class="sn-s" href="#intl-mail">11개 벤더 메일 파싱</a>
+  <a class="sn-p" href="#l3"><span class="n">03</span>L3 장비 관리 시스템</a>
+  <a class="sn-s" href="#l3-abstract">멀티벤더·프로토콜 추상화</a>
+  <a class="sn-s" href="#l3-pipeline">RabbitMQ Job 파이프라인</a>
+</nav>
 
 <div class="wrap">
 
@@ -794,5 +835,28 @@
   
 
 </div>
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.sidenav a'));
+  var targets = links.map(function(a){
+    return [document.getElementById(a.getAttribute('href').slice(1)), a];
+  }).filter(function(t){ return t[0]; });
+  var ticking = false;
+  function update(){
+    ticking = false;
+    var y = window.scrollY + 150;
+    var active = targets[0] && targets[0][1];
+    for (var i = 0; i < targets.length; i++){
+      var top = targets[i][0].getBoundingClientRect().top + window.scrollY;
+      if (top <= y) active = targets[i][1];
+    }
+    links.forEach(function(l){ l.classList.toggle('active', l === active); });
+  }
+  document.addEventListener('scroll', function(){
+    if (!ticking){ ticking = true; requestAnimationFrame(update); }
+  }, {passive:true});
+  update();
+})();
+</script>
 </body>
 </html>
