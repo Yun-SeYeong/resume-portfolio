@@ -34,16 +34,6 @@
   .top .sub{color:var(--muted);font-size:14px;margin-top:6px}
   .top .back{font-size:14px;font-weight:600}
 
-  .toc{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);
-    padding:22px 26px;margin:34px 0 10px;box-shadow:0 1px 2px rgba(20,20,40,.03)}
-  .toc h2{margin:0 0 14px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
-  .toc ol{margin:0;padding-left:0;list-style:none;counter-reset:t}
-  .toc > ol > li{counter-increment:t;margin:8px 0}
-  .toc > ol > li > a{font-weight:600;color:var(--ink);font-size:16px}
-  .toc > ol > li > a::before{content:counter(t)". ";color:var(--accent)}
-  .toc ul{margin:4px 0 0;padding-left:22px;list-style:none;display:flex;flex-wrap:wrap;gap:4px 16px}
-  .toc ul a{font-size:13px;color:var(--muted)}
-
   .project{background:transparent;border:none;border-radius:0;padding:0;margin:72px 0;scroll-margin-top:16px}
   .proj-head{background:linear-gradient(135deg,#181b26,var(--ink));border:1px solid #272b3a;border-radius:16px;
     padding:32px 34px;margin-bottom:16px;box-shadow:0 12px 28px rgba(19,21,29,.16)}
@@ -132,7 +122,7 @@
   @media (max-width:620px){ .proj-head,.subcard{padding:26px 20px} .top h1{font-size:24px} .project{margin:56px 0} }
   @media print{
     body{background:#fff;font-size:12px}
-    .top,.project,.toc{box-shadow:none}
+    .top,.project{box-shadow:none}
     .project{border-color:#ddd;margin:40px 0}
     .proj-head{background:#fff;border:1.5px solid #c6c9d2;box-shadow:none}
     .project h2{color:#000}
@@ -187,33 +177,6 @@
 </nav>
 
 <div class="wrap">
-
-  <nav class="toc" aria-label="목차">
-    <h2>Projects</h2>
-    <ol>
-      <li><a href="#automation">네트워크 장비 작업/점검 자동화 플랫폼 고도화</a>
-        <ul>
-          <li><a href="#auto-core">Core 고도화</a></li>
-          <li><a href="#auto-node">NodeServer 구축</a></li>
-          <li><a href="#auto-cli">CLI Commander API</a></li>
-          <li><a href="#auto-line">기간망 선번장 관리</a></li>
-        </ul>
-      </li>
-      <li><a href="#international">국제망 관리 시스템</a>
-        <ul>
-          <li><a href="#intl-domain">6가지 경로 통합 모델링</a></li>
-          <li><a href="#intl-failure">장애 유형 통합·추적</a></li>
-          <li><a href="#intl-mail">11개 벤더 메일 파싱</a></li>
-        </ul>
-      </li>
-      <li><a href="#l3">L3 네트워크 장비 관리 시스템</a>
-        <ul>
-          <li><a href="#l3-abstract">멀티벤더·멀티프로토콜 추상화</a></li>
-          <li><a href="#l3-pipeline">RabbitMQ 비동기 Job 파이프라인</a></li>
-        </ul>
-      </li>
-    </ol>
-  </nav>
 
   <!-- ============================ PROJECT 1 ============================ -->
   <section class="project" id="automation">
