@@ -189,6 +189,7 @@
   <a class="sn-p" href="#side-coin"><span class="n">S1</span>코인 자동매매 시스템</a>
   <a class="sn-p" href="#side-safips"><span class="n">S2</span>라이더 안전 내비 앱</a>
   <a class="sn-p" href="#side-netzero"><span class="n">S3</span>탄소배출 절감 앱</a>
+  <a class="sn-p" href="#side-tutti"><span class="n">S4</span>Tutti 음악 서비스</a>
 </nav>
 
 <div class="wrap">
@@ -982,6 +983,66 @@
       </ul>
     </div>
   </section>
+
+  <section class="project side" id="side-tutti">
+    <div class="proj-head">
+      <div class="proj-eyebrow">Side 04 <span class="badge">운영 중 · 2026</span></div>
+      <h2>Tutti — 코드 분석·타브 악보 생성 서비스</h2>
+      <div class="side-meta">개인 프로젝트 · <a href="https://tutti-music.net" target="_blank" rel="noopener" style="color:#a5b4fc">tutti-music.net</a></div>
+      <p class="lede">YouTube 링크나 오디오 파일에서 코드 진행을 자동 분석해 기타 코드·타브 악보로 만들어주는 웹 서비스를
+        Claude Code 중심의 AI 개발 워크플로우로 설계·개발해 런칭하고, 자체 도메인으로 운영 중입니다.</p>
+      <div class="stack">
+        <span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">FastAPI</span>
+        <span class="chip">PyTorch</span><span class="chip">alphaTab</span><span class="chip">PWA</span>
+      </div>
+      <div class="side-link"><a href="https://tutti-music.net" target="_blank" rel="noopener">tutti-music.net →</a></div>
+    </div>
+
+    <div class="subcard">
+      <figure class="dgm">
+      <svg viewBox="0 0 900 250" role="img" aria-label="Tutti 아키텍처">
+        <rect class="box b-client" x="24" y="30" width="130" height="52" rx="10"/>
+        <text class="tb" x="89" y="53" text-anchor="middle">사용자</text>
+        <text class="ts" x="89" y="71" text-anchor="middle">YouTube URL · 파일</text>
+        <rect class="box b-accent" x="214" y="30" width="150" height="52" rx="10"/>
+        <text class="tb" x="289" y="53" text-anchor="middle">React SPA</text>
+        <text class="ts" x="289" y="71" text-anchor="middle">PWA · IndexedDB</text>
+        <rect class="box b-accent" x="424" y="30" width="140" height="52" rx="10"/>
+        <text class="tb" x="494" y="53" text-anchor="middle">FastAPI</text>
+        <text class="ts" x="494" y="71" text-anchor="middle">분석 API</text>
+        <rect class="box b-queue" x="624" y="30" width="130" height="52" rx="10"/>
+        <text class="tb" x="689" y="53" text-anchor="middle">Job 큐</text>
+        <text class="ts" x="689" y="71" text-anchor="middle">비동기 + 폴링</text>
+        <rect class="box b-server" x="624" y="150" width="130" height="52" rx="10"/>
+        <text class="tb" x="689" y="173" text-anchor="middle">Worker</text>
+        <text class="ts" x="689" y="191" text-anchor="middle">오디오 추출</text>
+        <rect class="box b-mem" x="404" y="150" width="170" height="52" rx="10"/>
+        <text class="tb" x="489" y="173" text-anchor="middle">Transformer 코드 인식</text>
+        <text class="ts" x="489" y="191" text-anchor="middle">BTC 모델</text>
+        <rect class="box b-db" x="214" y="150" width="140" height="52" rx="10"/>
+        <text class="tb" x="284" y="173" text-anchor="middle">분석 결과 캐시</text>
+        <text class="ts" x="284" y="191" text-anchor="middle">video_id 기준</text>
+        <line class="edge" x1="154" y1="56" x2="212" y2="56" marker-end="url(#arrow)"/>
+        <line class="edge" x1="364" y1="56" x2="422" y2="56" marker-end="url(#arrow)"/>
+        <line class="edge" x1="564" y1="56" x2="622" y2="56" marker-end="url(#arrow)"/>
+        <line class="edge" x1="689" y1="82" x2="689" y2="148" marker-end="url(#arrow)"/>
+        <line class="edge" x1="622" y1="176" x2="576" y2="176" marker-end="url(#arrow)"/>
+        <line class="edge" x1="402" y1="176" x2="356" y2="176" marker-end="url(#arrow)"/>
+        <line class="edge-a" x1="284" y1="148" x2="284" y2="84" marker-end="url(#arrow-a)"/>
+        <text class="legend" x="450" y="238" text-anchor="middle">분석 결과를 SPA가 alphaTab 타브 악보로 렌더링하고, 재생 위치와 악보 커서를 동기화</text>
+      </svg>
+      <figcaption>비동기 분석 파이프라인과 악보 렌더링 프론트가 분리된 구조.</figcaption>
+      </figure>
+      <h4>설계 포인트</h4>
+      <ul class="points">
+        <li><b>비동기 분석 파이프라인</b> — 수 분 걸리는 YouTube 분석을 job_id로 큐잉하고 폴링·타임아웃으로 상태를 관리하며, video_id 기준 캐시로 같은 곡의 중복 분석을 방지합니다.</li>
+        <li><b>Transformer 코드 인식</b> — BTC(Bidirectional Transformer for Chord recognition) 모델로 오디오에서 코드 진행을 추출합니다.</li>
+        <li><b>악보 도메인 로직</b> — 분석 결과를 alphaTex 표기로 변환해 alphaTab으로 타브를 렌더링하고, timeMap 기반으로 YouTube/오디오 재생과 악보 커서를 동기화했습니다.</li>
+        <li><b>AI 개발 워크플로우</b> — Claude Code로 설계·구현하고 Puppeteer 검증 스크립트로 UI 동작을 자동 확인하는 루프를 만들어 단기간에 런칭했습니다. 악보는 IndexedDB에 로컬 저장되며 PWA로 설치할 수 있습니다.</li>
+      </ul>
+    </div>
+  </section>
+
 
 </div>
 <script>
