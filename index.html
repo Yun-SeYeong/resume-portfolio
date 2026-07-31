@@ -837,6 +837,53 @@
         <span class="chip">FastAPI</span><span class="chip">TimescaleDB</span><span class="chip">MLflow</span>
       </div>
     </div>
+
+    <div class="subcard">
+      <figure class="dgm">
+      <svg viewBox="0 0 900 250" role="img" aria-label="코인 자동매매 시그널 시스템 아키텍처">
+        <rect class="box b-client" x="24" y="30" width="120" height="52" rx="10"/>
+        <text class="tb" x="84" y="53" text-anchor="middle">Binance</text>
+        <text class="ts" x="84" y="71" text-anchor="middle">시세 · 펀딩비</text>
+        <rect class="box b-accent" x="204" y="30" width="140" height="52" rx="10"/>
+        <text class="tb" x="274" y="53" text-anchor="middle">data-collector</text>
+        <text class="ts" x="274" y="71" text-anchor="middle">과거 + 실시간</text>
+        <rect class="box b-db" x="404" y="30" width="150" height="52" rx="10"/>
+        <text class="tb" x="479" y="53" text-anchor="middle">TimescaleDB</text>
+        <text class="ts" x="479" y="71" text-anchor="middle">하이퍼테이블</text>
+        <rect class="box b-mem" x="614" y="30" width="150" height="52" rx="10"/>
+        <text class="tb" x="689" y="53" text-anchor="middle">ChartEncoder</text>
+        <text class="ts" x="689" y="71" text-anchor="middle">Transformer 임베딩</text>
+        <rect class="box b-mem" x="614" y="150" width="150" height="52" rx="10"/>
+        <text class="tb" x="689" y="173" text-anchor="middle">FAISS Index</text>
+        <text class="ts" x="689" y="191" text-anchor="middle">유사 패턴 Top-K</text>
+        <rect class="box b-accent" x="404" y="150" width="150" height="52" rx="10"/>
+        <text class="tb" x="479" y="173" text-anchor="middle">시나리오 집계</text>
+        <text class="ts" x="479" y="191" text-anchor="middle">이후 흐름 분포</text>
+        <rect class="box b-accent" x="204" y="150" width="140" height="52" rx="10"/>
+        <text class="tb" x="274" y="173" text-anchor="middle">리스크 엔진</text>
+        <text class="ts" x="274" y="191" text-anchor="middle">SL/TP 산출</text>
+        <rect class="box b-server" x="24" y="150" width="120" height="52" rx="10"/>
+        <text class="tb" x="84" y="173" text-anchor="middle">FastAPI</text>
+        <text class="ts" x="84" y="191" text-anchor="middle">시그널 + 근거 K개</text>
+        <line class="edge" x1="144" y1="56" x2="202" y2="56" marker-end="url(#arrow)"/>
+        <line class="edge" x1="344" y1="56" x2="402" y2="56" marker-end="url(#arrow)"/>
+        <line class="edge" x1="554" y1="56" x2="612" y2="56" marker-end="url(#arrow)"/>
+        <line class="edge-a" x1="689" y1="82" x2="689" y2="148" marker-end="url(#arrow-a)"/>
+        <line class="edge" x1="612" y1="176" x2="556" y2="176" marker-end="url(#arrow)"/>
+        <line class="edge" x1="402" y1="176" x2="346" y2="176" marker-end="url(#arrow)"/>
+        <line class="edge" x1="202" y1="176" x2="146" y2="176" marker-end="url(#arrow)"/>
+        <text class="legend" x="450" y="238" text-anchor="middle">현재 윈도우를 임베딩 → 과거 유사 구간 검색 → "그 후 어떻게 됐는가"를 분포로 집계 → SL/TP와 근거를 함께 반환</text>
+      </svg>
+      <figcaption>Retrieval 기반 파이프라인 — 예측 대신 검색으로 근거를 만드는 구조.</figcaption>
+      </figure>
+      <h4>설계 포인트</h4>
+      <ul class="points">
+        <li><b>설명 가능성 우선</b> — "다음 가격 예측" 대신 <b>유사 과거 구간 Top-K 검색</b>으로 전환. 모든 시그널에 근거가 된 과거 사례가 붙어 검증·복기가 가능합니다.</li>
+        <li><b>편향 차단 규율</b> — 랜덤 분할 대신 Walk-forward 검증만 사용, 윈도우 단위 정규화, 시점 t에 t-1 정보만 사용해 look-ahead bias를 피처 레이어에서 차단했습니다.</li>
+        <li><b>안전장치</b> — 모든 주문에 거래소 측 SL/TP를 강제하고, 최대 레버리지·건당 리스크·동시 포지션 수를 설정에 하드코딩해 실수로도 넘을 수 없게 했습니다.</li>
+        <li><b>감사 추적</b> — 모든 시그널과 주문을 시나리오·매칭 근거(JSONB)와 함께 DB에 영속화해 사후 분석이 가능하며, 실험은 MLflow로 관리합니다.</li>
+      </ul>
+    </div>
   </section>
 
   <section class="project side" id="side-safips">
@@ -857,6 +904,49 @@
       </div>
       <div class="side-link"><a href="https://github.com/Yun-SeYeong/Safips" target="_blank" rel="noopener">GitHub →</a></div>
     </div>
+
+    <div class="subcard">
+      <figure class="dgm">
+      <svg viewBox="0 0 900 250" role="img" aria-label="라이더 안전 주행 앱 아키텍처">
+        <rect class="box b-client" x="24" y="30" width="130" height="52" rx="10"/>
+        <text class="tb" x="89" y="53" text-anchor="middle">모바일 앱</text>
+        <text class="ts" x="89" y="71" text-anchor="middle">센서 10건/초</text>
+        <rect class="box b-accent" x="214" y="30" width="150" height="52" rx="10"/>
+        <text class="tb" x="289" y="53" text-anchor="middle">Spring Boot API</text>
+        <text class="ts" x="289" y="71" text-anchor="middle">Kakao OAuth2 + JWT</text>
+        <rect class="box b-db" x="424" y="30" width="140" height="52" rx="10"/>
+        <text class="tb" x="494" y="53" text-anchor="middle">InfluxDB</text>
+        <text class="ts" x="494" y="71" text-anchor="middle">Raw 비동기 적재</text>
+        <rect class="box" x="624" y="30" width="120" height="52" rx="10"/>
+        <text class="tb" x="684" y="53" text-anchor="middle">Grafana</text>
+        <text class="ts" x="684" y="71" text-anchor="middle">시각화</text>
+        <rect class="box b-server" x="214" y="150" width="150" height="52" rx="10"/>
+        <text class="tb" x="289" y="173" text-anchor="middle">Scheduler</text>
+        <text class="ts" x="289" y="191" text-anchor="middle">주기 배치 추론</text>
+        <rect class="box b-mem" x="424" y="150" width="180" height="52" rx="10"/>
+        <text class="tb" x="514" y="173" text-anchor="middle">DL4J Autoencoder</text>
+        <text class="ts" x="514" y="191" text-anchor="middle">복원 오차 → 이상도·충격</text>
+        <rect class="box b-accent" x="664" y="150" width="140" height="52" rx="10"/>
+        <text class="tb" x="734" y="173" text-anchor="middle">주행 분석 결과</text>
+        <text class="ts" x="734" y="191" text-anchor="middle">이상 구간 · 뱃지</text>
+        <line class="edge" x1="154" y1="56" x2="212" y2="56" marker-end="url(#arrow)"/>
+        <line class="edge" x1="364" y1="56" x2="422" y2="56" marker-end="url(#arrow)"/>
+        <line class="edge" x1="564" y1="56" x2="622" y2="56" marker-end="url(#arrow)"/>
+        <line class="edge-a" x1="494" y1="82" x2="494" y2="148" marker-end="url(#arrow-a)"/>
+        <line class="edge" x1="364" y1="176" x2="422" y2="176" marker-end="url(#arrow)"/>
+        <line class="edge" x1="604" y1="176" x2="662" y2="176" marker-end="url(#arrow)"/>
+        <text class="legend" x="450" y="238" text-anchor="middle">고빈도 센서 쓰기는 InfluxDB로 흡수하고, 스케줄러가 배치로 Autoencoder 추론을 수행</text>
+      </svg>
+      <figcaption>수집(실시간)과 분석(배치)을 분리한 구조.</figcaption>
+      </figure>
+      <h4>설계 포인트</h4>
+      <ul class="points">
+        <li><b>시계열 DB 선택</b> — 초당 10건씩 쌓이는 센서 raw 데이터를 RDB 대신 InfluxDB에 비동기로 적재해, 쓰기 부하가 API 응답을 지연시키지 않도록 했습니다.</li>
+        <li><b>비지도 이상 탐지</b> — 이상 주행의 라벨이 없는 문제라 Autoencoder를 선택했습니다. 정상 주행으로 학습한 뒤 <b>복원 오차가 임계값을 넘으면 이상</b>으로 판정하고, 모델별 임계값을 함께 저장해 재현 가능하게 했습니다.</li>
+        <li><b>수집·분석 분리</b> — 실시간 수집 경로와 스케줄러 기반 배치 추론 경로를 분리해, 추론 비용이 수집 처리량에 영향을 주지 않습니다.</li>
+        <li><b>이벤트 기반 뱃지</b> — 주행 분석 결과에 따른 뱃지 부여를 Spring Event로 분리해 핵심 분석 로직과 게이미피케이션 로직의 결합을 낮췄습니다.</li>
+      </ul>
+    </div>
   </section>
 
   <section class="project side" id="side-netzero">
@@ -876,6 +966,45 @@
         <span class="chip">Azure Blob Storage</span><span class="chip">GitHub Actions</span>
       </div>
       <div class="side-link"><a href="https://github.com/2025-netzero-hackathon/nzmz-api" target="_blank" rel="noopener">GitHub →</a></div>
+    </div>
+
+    <div class="subcard">
+      <figure class="dgm">
+      <svg viewBox="0 0 900 250" role="img" aria-label="탄소배출 절감 앱 아키텍처">
+        <rect class="box b-client" x="24" y="30" width="130" height="52" rx="10"/>
+        <text class="tb" x="89" y="53" text-anchor="middle">모바일 앱</text>
+        <text class="ts" x="89" y="71" text-anchor="middle">고지서 업로드</text>
+        <rect class="box b-accent" x="214" y="30" width="150" height="52" rx="10"/>
+        <text class="tb" x="289" y="53" text-anchor="middle">Spring Boot API</text>
+        <text class="ts" x="289" y="71" text-anchor="middle">Kakao OAuth2 + JWT</text>
+        <rect class="box b-db" x="424" y="30" width="160" height="52" rx="10"/>
+        <text class="tb" x="504" y="53" text-anchor="middle">Azure Blob Storage</text>
+        <text class="ts" x="504" y="71" text-anchor="middle">Stream Upload</text>
+        <rect class="box b-mem" x="424" y="150" width="160" height="52" rx="10"/>
+        <text class="tb" x="504" y="173" text-anchor="middle">Form Recognizer</text>
+        <text class="ts" x="504" y="191" text-anchor="middle">사용량 정형 추출</text>
+        <rect class="box b-mem" x="644" y="150" width="140" height="52" rx="10"/>
+        <text class="tb" x="714" y="173" text-anchor="middle">Azure OpenAI</text>
+        <text class="ts" x="714" y="191" text-anchor="middle">사용 패턴 분석</text>
+        <rect class="box b-accent" x="214" y="150" width="150" height="52" rx="10"/>
+        <text class="tb" x="289" y="173" text-anchor="middle">미션 · 리포트</text>
+        <text class="ts" x="289" y="191" text-anchor="middle">절감 미션 추천</text>
+        <line class="edge" x1="154" y1="56" x2="212" y2="56" marker-end="url(#arrow)"/>
+        <line class="edge" x1="364" y1="56" x2="422" y2="56" marker-end="url(#arrow)"/>
+        <line class="edge-a" x1="504" y1="82" x2="504" y2="148" marker-end="url(#arrow-a)"/>
+        <line class="edge" x1="584" y1="176" x2="642" y2="176" marker-end="url(#arrow)"/>
+        <path class="edge" d="M644,196 C500,232 380,224 300,204" marker-end="url(#arrow)"/>
+        <text class="legend" x="450" y="243" text-anchor="middle">업로드 → 정형 추출(Form Recognizer) → 해석(OpenAI) → 미션 추천 | 배포: GitHub Actions → Azure</text>
+      </svg>
+      <figcaption>추출과 해석을 분리한 2단계 AI 파이프라인.</figcaption>
+      </figure>
+      <h4>설계 포인트</h4>
+      <ul class="points">
+        <li><b>2단계 AI 파이프라인</b> — 고지서에서 수치를 뽑는 <b>정형 추출(Form Recognizer)</b>과 패턴을 해석하는 <b>분석(Azure OpenAI)</b>을 분리해, 추출 정확도와 분석 품질을 각각 검증할 수 있게 했습니다.</li>
+        <li><b>스트림 업로드</b> — 고지서 이미지를 서버 메모리에 통째로 올리지 않고 Blob Storage로 스트림 업로드해, 해커톤 데모 중 대용량 파일에도 안정적으로 동작했습니다.</li>
+        <li><b>관리형 서비스 조합</b> — 해커톤의 시간 제약에 맞춰 Azure 관리형 서비스를 조합해 짧은 시간에 AI 파이프라인을 완성하는 데 집중했습니다.</li>
+        <li><b>배포 자동화</b> — GitHub Actions로 Azure 배포 파이프라인을 구성해 팀원 누구가 머지해도 데모 서버에 자동 반영되게 했습니다.</li>
+      </ul>
     </div>
   </section>
 
