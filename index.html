@@ -100,18 +100,11 @@
   .side-divider{display:flex;align-items:center;gap:16px;margin:88px 0 8px;
     font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
   .side-divider::before,.side-divider::after{content:"";flex:1;height:1px;background:var(--line)}
-  .project.side{margin:32px 0}
-  .side-card{background:var(--bg);border:1.5px solid #c7d2fe;border-radius:16px;
-    padding:30px 34px;box-shadow:0 1px 3px rgba(20,20,40,.04)}
-  .side-card .proj-eyebrow{color:var(--accent)}
-  .side-card .proj-eyebrow::after{background:var(--line)}
-  .side-card h2{color:var(--ink);font-size:22px}
-  .side-card .lede{color:#2b303b}
-  .side-meta{font-size:13px;color:var(--muted);margin:-4px 0 10px}
+  .side-meta{font-size:13px;color:#9ba3b8;margin:-4px 0 10px}
   .badge{flex:0 0 auto;font-size:11px;font-weight:800;color:#b45309;background:#fffbeb;
     border:1px solid #fde68a;border-radius:999px;padding:2px 10px;letter-spacing:0}
-  .side-card .chip{color:#3b3f63;background:var(--accent-soft);border:1px solid #e0e3f7}
   .side-link{margin-top:14px;font-size:13.5px;font-weight:600}
+  .proj-head .side-link a{color:#a5b4fc}
 
   .sidenav{display:none;position:fixed;top:50%;transform:translateY(-50%);
     max-height:calc(100vh - 80px);overflow-y:auto;width:212px;
@@ -821,17 +814,11 @@
   <div class="side-divider" id="side">Side Projects</div>
 
   <section class="project side" id="side-coin">
-    <div class="side-card">
+    <div class="proj-head">
       <div class="proj-eyebrow">Side 01 <span class="badge">개인 프로젝트 · 2026</span></div>
       <h2>Transformer 기반 코인 자동매매 시그널 시스템</h2>
       <p class="lede">"다음 가격"을 직접 예측하는 대신, 현재와 유사한 과거 구간을 검색해 그 이후 흐름으로 근거를 제시하는
         설명 가능한 매매 시그널 시스템을 설계·개발했습니다.</p>
-      <ul class="points">
-        <li><b>Retrieval 기반 시그널</b> — Transformer 인코더로 시세 윈도우를 임베딩하고 FAISS Top-K 검색으로 유사 패턴을 찾아, 시그널마다 근거가 된 과거 구간을 함께 제시</li>
-        <li><b>리스크 엔진</b> — 유사 구간의 이후 흐름을 시나리오 분포로 집계해 SL/TP를 산출</li>
-        <li><b>데이터 파이프라인</b> — Binance 시세·펀딩비를 TimescaleDB 하이퍼테이블로 적재, FastAPI 시그널 API, MLflow 실험 관리</li>
-        <li><b>검증 체계</b> — Walk-forward 백테스트, look-ahead bias 방지, 거래소 측 SL/TP 가드레일 구현</li>
-      </ul>
       <div class="stack">
         <span class="chip">Python</span><span class="chip">PyTorch</span><span class="chip">FAISS</span>
         <span class="chip">FastAPI</span><span class="chip">TimescaleDB</span><span class="chip">MLflow</span>
@@ -887,17 +874,11 @@
   </section>
 
   <section class="project side" id="side-safips">
-    <div class="side-card">
+    <div class="proj-head">
       <div class="proj-eyebrow">Side 02 <span class="badge">졸업작품전 최우수상</span></div>
       <h2>자전거 라이더 안전 주행 내비게이션 앱</h2>
       <div class="side-meta">2025 인하대학교 미래융합대학 소프트웨어융합공학과 졸업작품전 · 2025.11</div>
       <p class="lede">자이로·가속도 센서 데이터를 실시간으로 수집·분석해 주행 이상과 충격을 탐지하는 안전 주행 시스템입니다.</p>
-      <ul class="points">
-        <li>초당 10건의 자이로·가속도 센서 데이터 수집 파이프라인 구축</li>
-        <li>Raw 데이터 InfluxDB 비동기 적재</li>
-        <li>DL4J로 Autoencoder 구현 — 주행 이상도 추론 및 충격 분석</li>
-        <li>서비스 CRUD API 개발, Grafana 시각화</li>
-      </ul>
       <div class="stack">
         <span class="chip">Java</span><span class="chip">DL4J</span>
         <span class="chip">InfluxDB</span><span class="chip">Grafana</span>
@@ -950,17 +931,11 @@
   </section>
 
   <section class="project side" id="side-netzero">
-    <div class="side-card">
+    <div class="proj-head">
       <div class="proj-eyebrow">Side 03 <span class="badge">해커톤 장려상</span></div>
       <h2>생활 미션 기반 탄소배출 절감 앱</h2>
       <div class="side-meta">2025 Netzero Hackathon · 2025.06</div>
       <p class="lede">고지서를 업로드하면 사용량을 자동 추출·분석해 생활 속 탄소배출 절감 미션을 제안하는 앱의 백엔드를 개발했습니다.</p>
-      <ul class="points">
-        <li>Azure Form Recognizer 연동으로 고지서(Bill) 데이터 자동 추출</li>
-        <li>Azure OpenAI로 고지서 사용량 데이터 분석</li>
-        <li>Azure Blob Storage Stream Upload 및 서비스 CRUD 개발</li>
-        <li>GitHub Actions로 CI/CD 파이프라인 구축</li>
-      </ul>
       <div class="stack">
         <span class="chip">Java</span><span class="chip">Azure OpenAI</span><span class="chip">Form Recognizer</span>
         <span class="chip">Azure Blob Storage</span><span class="chip">GitHub Actions</span>
